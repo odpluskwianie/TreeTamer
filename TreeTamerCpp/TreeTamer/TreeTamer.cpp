@@ -3,8 +3,9 @@
 
 #include "pch.h"
 #include "framework.h"
+#include "TreeTamer.h"
 
-// TODO: To jest przykład funkcji biblioteki
-void fnTreeTamer()
+namespace TreeTamer
 {
+
 }
