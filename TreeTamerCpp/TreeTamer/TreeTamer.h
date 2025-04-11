@@ -4,53 +4,44 @@
 
 namespace TreeTamer
 {
-	template <typename PathType, typename DataType>
-	class IPathableTreeDataEntry
-	{
-	public:
-		virtual ~IPathableTreeDataEntry() = default;
-		virtual PathType getPath() const = 0;
-		virtual void setPath(const PathType& path) = 0;
-		virtual DataType getData() const = 0;
-	};
+	//template <typename PathType, typename DataType>
+	//class IPathableTreeDataEntry
+	//{
+	//public:
+	//	virtual ~IPathableTreeDataEntry() = default;
+	//	virtual PathType getPath() const = 0;
+	//	virtual void setPath(const PathType& path) = 0;
+	//	virtual DataType getData() const = 0;
+	//};
 
-	template <typename PathType, typename DataType>
-	class IIterableTreeData
-	{
-	public:
-		bool hasNext() const = 0;
-		IPathableTreeDataEntry<PathType, DataType> next() = 0;
-		IPathableTreeDataEntry<PathType, DataType> current() const = 0;
-		IPathableTreeDataEntry<PathType, DataType> hasSubtree() const = 0;
-		IIterableTreeData<PathType, DataType> getSubtree() const = 0;
-	};
+	//template <typename PathType, typename DataType>
+	//class IIterableTreeData
+	//{
+	//public:
+	//	bool hasNext() const = 0;
+	//	IPathableTreeDataEntry<PathType, DataType> next() = 0;
+	//	IPathableTreeDataEntry<PathType, DataType> current() const = 0;
+	//	IPathableTreeDataEntry<PathType, DataType> hasSubtree() const = 0;
+	//	IIterableTreeData<PathType, DataType> getSubtree() const = 0;
+	//};
 
-	template <typename PathType, typename DataType>
+	template <typename PathType, typename DataType, typename IterableTreeDataType>
 	class TreeTamerConfig
 	{
 		std::list<PathType> paths;
-		IIterableTreeData<PathType, DataType> data;
+		IterableTreeDataType data;
 		std::function <void(std::map<PathType, DataType>)> onDataEntryFulfilledCallback;
 
 	public:
 		TreeTamerConfig(data, paths, onDataEntryFulfilledCallback) : paths(paths), data(data), onDataEntryFulfilledCallback(onDataEntryFulfilledCallback){}
 	};
 
-	template <typename PathType, typename DataType>
-	class TreeTamerBase
-	{
-	public:
-		TreeTamerBase() = default;
-		virtual ~TreeTamerBase() = default;
-		virtual void init(TreeTamerConfig<PathType, DataType>& t) = 0;
-		virtual void processTree() = 0;
-	};
 
-	template <typename PathType, typename DataType>//IIterableTreeData replace by template to increase processing speed?
-	class TreeTamer : public TreeTamerBase<PathType, DataType>
+	template <typename PathType, typename DataType, typename IterableTreeDataType >//IIterableTreeData replace by template to increase processing speed?
+	class TreeTamer
 	{
 	private:
-		IIterableTreeData<PathType, DataType> treeData;///////
+		IterableTreeDataType/*<PathType, DataType>*/ treeData;///////
 		std::list<PathType> paths;
 		std::function <void(std::map<PathType, DataType>)> onDataEntryFulfilledCallback;
 
@@ -66,15 +57,16 @@ namespace TreeTamer
 		
 		void processTree(int currentDepth = 0, std::map<PathType, DataType>& outputData) override
 		{
+			//let's begin from iterate over the tree
 			outputData.at(treeData.current().getPath()) = treeData.current().getData();
 			while (treeData.hasNext())
 			{
-				if (treeData.current().getPath().getLength() > 1)
+				if (treeData.current().getPath().getLength() > 1) // MINUS CURRENT DEPTH
 					//get into the subtree
 				else switch (treeData.current().getPath().getLength())
 				{
 				case 1:
-					//add to curent results array and process it by the callback
+					//add to curent results array and process it by the callback, THEN CLEAR RESULTS FROM EXITED NODE
 					break;
 				case 0:
 					//do nothing
@@ -94,6 +86,7 @@ namespace TreeTamer
 						processTree(subNode);
 					}
 				}
+
 			}
 		}
 	};
