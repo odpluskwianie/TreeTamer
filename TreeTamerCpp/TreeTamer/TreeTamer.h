@@ -4,27 +4,6 @@
 
 namespace TreeTamer
 {
-	//template <typename PathType, typename DataType>
-	//class IPathableTreeDataEntry
-	//{
-	//public:
-	//	virtual ~IPathableTreeDataEntry() = default;
-	//	virtual PathType getPath() const = 0;
-	//	virtual void setPath(const PathType& path) = 0;
-	//	virtual DataType getData() const = 0;
-	//};
-
-	//template <typename PathType, typename DataType>
-	//class IIterableTreeData
-	//{
-	//public:
-	//	bool hasNext() const = 0;
-	//	IPathableTreeDataEntry<PathType, DataType> next() = 0;
-	//	IPathableTreeDataEntry<PathType, DataType> current() const = 0;
-	//	IPathableTreeDataEntry<PathType, DataType> hasSubtree() const = 0;
-	//	IIterableTreeData<PathType, DataType> getSubtree() const = 0;
-	//};
-
 	template <typename PathType, typename DataType, typename IterableTreeDataType>
 	class TreeTamerConfig
 	{
@@ -37,7 +16,7 @@ namespace TreeTamer
 	};
 
 
-	template <typename PathType, typename DataType, typename IterableTreeDataType >//IIterableTreeData replace by template to increase processing speed?
+	template <typename PathType, typename DataType, typename IterableTreeDataType >//IIterableTreeData replace by template to increase processing speed? AND USE CONCEPTS FROM C++20!!!!!!oneoneone
 	class TreeTamer
 	{
 	private:
