@@ -1,10 +1,30 @@
 #pragma once
 #include <list>
 #include <map>
+#include <concepts>
+#include <memory>
 
 namespace TreeTamer
 {
-	template <typename PathType, typename DataType, typename IterableTreeDataType>
+	///TODO: concepts of DataType i PathType 
+
+	template<typename T>
+	concept TreeIterator = requires(T iterator) {
+		{ iterator.hasNext() } -> std::convertible_to<bool>;
+		{ iterator.next() };
+		{ iterator.hasChildren() } -> std::convertible_to<bool>;
+		{ iterator.currentDepth() } -> std::same_as<int>;
+		{ iterator.deeper() };
+		{ iterator.shallower() };
+		{ iterator.hasParent() } -> std::convertible_to<bool>;
+	};
+
+	template<typename T>
+	concept IIterableTree = requires(T tree) {
+		{ tree.getIterator() } -> TreeIterator;
+	};
+
+	template <typename PathType, typename DataType, IIterableTree IterableTreeDataType>
 	class TreeTamerConfig
 	{
 		std::list<PathType> paths;
@@ -14,7 +34,6 @@ namespace TreeTamer
 	public:
 		TreeTamerConfig(data, paths, onDataEntryFulfilledCallback) : paths(paths), data(data), onDataEntryFulfilledCallback(onDataEntryFulfilledCallback){}
 	};
-
 
 	template <typename PathType, typename DataType, typename IterableTreeDataType >//IIterableTreeData replace by template to increase processing speed? AND USE CONCEPTS FROM C++20!!!!!!oneoneone
 	class TreeTamer
@@ -54,18 +73,20 @@ namespace TreeTamer
 					throw std::exception("Invalid path length");//
 
 
-				auto node = treeData.next();
 				processTree(currentDepth);
 				if (node.hasSubtree())
 				{
-					auto subtree = node.getSubtree();
+					node.deeper();
+					/*auto subtree = node.getSubtree();
 					while (subtree.hasNext())
 					{
 						auto subNode = subtree.next();
 						processTree(subNode);
-					}
-				}
+					}*/
 
+				}
+				
+				treeData.next();
 			}
 		}
 	};
