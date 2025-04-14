@@ -6,62 +6,74 @@
 
 namespace TreeTamer
 {
-	///TODO: concepts of DataType i PathType 
+	template<typename PathType>
+	concept TreePath = requires(const PathType& p, const PathType& q)
+	{
+		{ p.operator==(q) } -> std::same_as<bool>;
+		{ p.startsWith(q) } -> std::same_as<bool>;
+		{ p.getLength() } -> std::same_as<int>;
+	};
 
-	template<typename T>
+	template<typename T, typename DataType>
 	concept TreeIterator = requires(T iterator) {
 		{ iterator.hasNext() } -> std::convertible_to<bool>;
-		{ iterator.next() };
+		{ iterator.nextSibling() };
 		{ iterator.hasChildren() } -> std::convertible_to<bool>;
 		{ iterator.currentDepth() } -> std::same_as<int>;
-		{ iterator.deeper() };
-		{ iterator.shallower() };
+		{ iterator.firstChild() };
+		{ iterator.parent() };
 		{ iterator.hasParent() } -> std::convertible_to<bool>;
+		{ iterator.operator*() } -> std::same_as<DataType>;
 	};
 
-	template<typename T>
+	template<typename T, typename DataType>
 	concept IIterableTree = requires(T tree) {
-		{ tree.getIterator() } -> TreeIterator;
+		{ tree.getIterator() } -> TreeIterator<DataType>;
 	};
 
-	template <typename PathType, typename DataType, IIterableTree IterableTreeDataType>
+	template <typename DataType>
 	class TreeTamerConfig
 	{
-		std::list<PathType> paths;
-		IterableTreeDataType data;
+		std::list<TreePath> paths;
+		IIterableTree<DataType> data;
 		std::function <void(std::map<PathType, DataType>)> onDataEntryFulfilledCallback;
 
 	public:
 		TreeTamerConfig(data, paths, onDataEntryFulfilledCallback) : paths(paths), data(data), onDataEntryFulfilledCallback(onDataEntryFulfilledCallback){}
 	};
 
-	template <typename PathType, typename DataType, typename IterableTreeDataType >//IIterableTreeData replace by template to increase processing speed? AND USE CONCEPTS FROM C++20!!!!!!oneoneone
+	template <typename DataType>
 	class TreeTamer
 	{
 	private:
-		IterableTreeDataType/*<PathType, DataType>*/ treeData;///////
-		std::list<PathType> paths;
+		IIterableTree tree;
+		TreeIterator iterator;
+		std::list<TreePath> paths;
 		std::function <void(std::map<PathType, DataType>)> onDataEntryFulfilledCallback;
 
 	public:
 		TreeTamer() = default;
 		virtual ~TreeTamer() = default;
-		void init(TreeTamerConfig<PathType, DataType>& config) override
+		void init(TreeTamerConfig<PathType, DataType>& config)
 		{
-			treeData = config.data;
+			tree = config.data;
 			paths = config.paths;
 			onDataEntryFulfilledCallback = config.onDataEntryFulfilledCallback;
+			iterator = tree.getIterator();
 		}
 		
-		void processTree(int currentDepth = 0, std::map<PathType, DataType>& outputData) override
+		void processTree(int currentDepth = 0, std::map<PathType, DataType>& outputData) 
 		{
 			//let's begin from iterate over the tree
-			outputData.at(treeData.current().getPath()) = treeData.current().getData();
-			while (treeData.hasNext())
+			//outputData[tree.current().getPath()] = *tree;
+
+
+
+			do
 			{
-				if (treeData.current().getPath().getLength() > 1) // MINUS CURRENT DEPTH
+				if (*tree.getPath().getLength() > 1) // MINUS CURRENT DEPTH
 					//get into the subtree
-				else switch (treeData.current().getPath().getLength())
+				else switch (tree.current().getPath().getLength())
 				{
 				case 1:
 					//add to curent results array and process it by the callback, THEN CLEAR RESULTS FROM EXITED NODE
@@ -86,8 +98,8 @@ namespace TreeTamer
 
 				}
 				
-				treeData.next();
-			}
+				tree.next();
+			} while (tree.hasNext())
 		}
 	};
 }
