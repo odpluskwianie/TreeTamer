@@ -35,3 +35,8 @@
 .vs/*
 */.vs/*
 */packages/*
+
+# Debug
+*/*/*/Debug/*
+*/*/Debug/*
+*/Debug/*
