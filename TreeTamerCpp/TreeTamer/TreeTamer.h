@@ -33,7 +33,7 @@ namespace TreeTamer
 	};
 
 	template <typename DataType, typename PathType, typename TreeType>
-		requires TreePath<PathType> && IIterableTree<TreeType, DataType>&& std::is_copy_constructible_v<DataType>&& std::is_copy_constructible_v<PathType>&& std::is_copy_constructible_v<TreeType>
+		requires TreePath<PathType> && IIterableTree<TreeType, DataType>
 	class TreeTamerConfig
 	{
 		std::list<PathType> paths;
@@ -45,7 +45,7 @@ namespace TreeTamer
 	};
 
 	template <typename DataType, typename TreeType, typename IteratorType, typename PathType>
-		requires std::is_copy_constructible_v<DataType>&& std::is_copy_constructible_v<TreeType>&& TreeIterator<IteratorType, DataType>&& IIterableTree<TreeType, DataType>&& TreePath<PathType>
+		requires TreeIterator<IteratorType, DataType>&& IIterableTree<TreeType, DataType>&& TreePath<PathType>
 	class TreeTamer
 	{
 	private:
