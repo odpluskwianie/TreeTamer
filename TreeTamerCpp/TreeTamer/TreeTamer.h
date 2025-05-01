@@ -3,6 +3,7 @@
 #include <map>
 #include <concepts>
 #include <memory>
+#include <functional>
 
 namespace TreeTamer
 {
@@ -31,30 +32,32 @@ namespace TreeTamer
 		{ tree.getIterator() } -> TreeIterator<DataType>;
 	};
 
-	template <typename DataType>
+	template <typename DataType, typename PathType, typename TreeType>
+		requires TreePath<PathType> && IIterableTree<TreeType, DataType>
 	class TreeTamerConfig
 	{
-		std::list<TreePath> paths;
-		IIterableTree<DataType> data;
+		std::list<PathType> paths;
+		TreeType data;
 		std::function <void(std::map<PathType, DataType>)> onDataEntryFulfilledCallback;
 
 	public:
-		TreeTamerConfig(data, paths, onDataEntryFulfilledCallback) : paths(paths), data(data), onDataEntryFulfilledCallback(onDataEntryFulfilledCallback){}
+		TreeTamerConfig(TreeType data, std::list<PathType> paths, std::function <void(std::map<PathType, DataType>)> onDataEntryFulfilledCallback) : paths(paths), data(data), onDataEntryFulfilledCallback(onDataEntryFulfilledCallback){}
 	};
 
-	template <typename DataType>
+	template <typename DataType, typename TreeType, typename IteratorType, typename PathType>
+		requires TreeIterator<IteratorType, DataType>&& IIterableTree<TreeType, DataType>&& TreePath<PathType>
 	class TreeTamer
 	{
 	private:
-		IIterableTree tree;
-		TreeIterator iterator;
-		std::list<TreePath> paths;
+		TreeType tree;
+		IteratorType iterator;
+		std::list<PathType> paths;
 		std::function <void(std::map<PathType, DataType>)> onDataEntryFulfilledCallback;
 
 	public:
 		TreeTamer() = default;
 		virtual ~TreeTamer() = default;
-		void init(TreeTamerConfig<PathType, DataType>& config)
+		void init(TreeTamerConfig<PathType, DataType, TreeType>& config)
 		{
 			tree = config.data;
 			paths = config.paths;
@@ -62,7 +65,7 @@ namespace TreeTamer
 			iterator = tree.getIterator();
 		}
 		
-		void processTree(int currentDepth = 0, std::map<PathType, DataType>& outputData) 
+		void processTree(int currentDepth = 0, std::map<PathType, DataType>& outputData = {})
 		{
 			//let's begin from iterate over the tree
 			//outputData[tree.current().getPath()] = *tree;
@@ -72,7 +75,7 @@ namespace TreeTamer
 			do
 			{
 				if (*tree.getPath().getLength() > 1) // MINUS CURRENT DEPTH
-					//get into the subtree
+					;//get into the subtree
 				else switch (tree.current().getPath().getLength())
 				{
 				case 1:
@@ -82,13 +85,14 @@ namespace TreeTamer
 					//do nothing
 					break;
 				default:
-					throw std::exception("Invalid path length");//
+					throw std::exception("Invalid path length");
+				}
 
 
 				processTree(currentDepth);
-				if (node.hasSubtree())
+				if (false/*node.hasSubtree()*/)
 				{
-					node.deeper();
+					//node.deeper();
 					/*auto subtree = node.getSubtree();
 					while (subtree.hasNext())
 					{
@@ -99,7 +103,7 @@ namespace TreeTamer
 				}
 				
 				tree.next();
-			} while (tree.hasNext())
+			} while (tree.hasNext());
 		}
 	};
 }
