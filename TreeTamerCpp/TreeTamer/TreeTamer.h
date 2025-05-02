@@ -12,7 +12,7 @@ namespace TreeTamer
 	{
 		{ p.operator==(q) } -> std::same_as<bool>;
 		{ p.startsWith(q) } -> std::same_as<bool>;
-		{ p.getLength() } -> std::same_as<int>;
+		{ p.getLength() } -> std::same_as<size_t>;
 	};
 
 	template<typename T, typename DataType>
@@ -28,12 +28,12 @@ namespace TreeTamer
 	};
 
 	template<typename T, typename DataType>
-	concept IIterableTree = requires(T tree) {
+	concept ITreeIterable = requires(T tree) {
 		{ tree.getIterator() } -> TreeIterator<DataType>;
 	};
 
 	template <typename DataType, typename PathType, typename TreeType>
-		requires TreePath<PathType> && IIterableTree<TreeType, DataType>
+		requires TreePath<PathType> && ITreeIterable<TreeType, DataType>
 	class TreeTamerConfig
 	{
 		std::list<PathType> paths;
@@ -45,7 +45,7 @@ namespace TreeTamer
 	};
 
 	template <typename DataType, typename TreeType, typename IteratorType, typename PathType>
-		requires TreeIterator<IteratorType, DataType>&& IIterableTree<TreeType, DataType>&& TreePath<PathType>
+		requires TreeIterator<IteratorType, DataType>&& ITreeIterable<TreeType, DataType>&& TreePath<PathType>
 	class TreeTamer
 	{
 	private:
