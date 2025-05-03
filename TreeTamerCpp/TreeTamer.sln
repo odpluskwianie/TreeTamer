@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TreeTamerExamples", "TreeTa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TreeTamerXml", "TreeTamerXml\TreeTamerXml.vcxproj", "{DA60D4C2-7C32-480C-9AA8-1B3C64A69EBE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tinyxml2compile", "tinyxml2compile\tinyxml2compile.vcxproj", "{73881F36-48AB-49F0-9F47-E3653915C46C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{DA60D4C2-7C32-480C-9AA8-1B3C64A69EBE}.Release|x64.Build.0 = Release|x64
 		{DA60D4C2-7C32-480C-9AA8-1B3C64A69EBE}.Release|x86.ActiveCfg = Release|Win32
 		{DA60D4C2-7C32-480C-9AA8-1B3C64A69EBE}.Release|x86.Build.0 = Release|Win32
+		{73881F36-48AB-49F0-9F47-E3653915C46C}.Debug|x64.ActiveCfg = Debug|x64
+		{73881F36-48AB-49F0-9F47-E3653915C46C}.Debug|x64.Build.0 = Debug|x64
+		{73881F36-48AB-49F0-9F47-E3653915C46C}.Debug|x86.ActiveCfg = Debug|Win32
+		{73881F36-48AB-49F0-9F47-E3653915C46C}.Debug|x86.Build.0 = Debug|Win32
+		{73881F36-48AB-49F0-9F47-E3653915C46C}.Release|x64.ActiveCfg = Release|x64
+		{73881F36-48AB-49F0-9F47-E3653915C46C}.Release|x64.Build.0 = Release|x64
+		{73881F36-48AB-49F0-9F47-E3653915C46C}.Release|x86.ActiveCfg = Release|Win32
+		{73881F36-48AB-49F0-9F47-E3653915C46C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
