@@ -24,7 +24,7 @@ namespace TreeTamer
 		{ iterator.firstChild() };
 		{ iterator.parent() };
 		{ iterator.hasParent() } -> std::convertible_to<bool>;
-		{ iterator.operator*() } -> std::same_as<DataType>;
+		{ iterator.operator*() } -> std::convertible_to<DataType>;
 	};
 
 	template<typename T, typename DataType>
@@ -45,7 +45,7 @@ namespace TreeTamer
 	};
 
 	template <typename DataType, typename TreeType, typename IteratorType, typename PathType>
-		requires TreeIterator<IteratorType, DataType>&& ITreeIterable<TreeType, DataType>&& TreePath<PathType>
+		requires TreeIterator<IteratorType, DataType>&& /*ITreeIterable<TreeType, DataType>&& */TreePath<PathType>
 	class TreeTamer
 	{
 	private:

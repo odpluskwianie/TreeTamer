@@ -101,10 +101,8 @@ namespace TreeTamerTinyXml2
         }
     };
 
-    class TreeTamerXml : public TreeTamer::TreeTamer<std::string, tinyxml2::XMLDocument, tinyxml2::XMLElement*, std::vector<std::string>>
+    class TreeTamerTinyXml2 : TreeTamer::TreeTamer<std::string, tinyxml2::XMLDocument, TreeTamerXmlIterator, TreeTamerXmlPath<>>
     {
-    public:
-        TreeTamerXml();
-        ~TreeTamerXml();
+
     };
 }

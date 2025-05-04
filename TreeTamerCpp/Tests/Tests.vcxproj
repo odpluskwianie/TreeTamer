@@ -60,6 +60,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\tinyxml2\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -118,8 +119,8 @@
     <ProjectReference Include="..\tinyxml2compile\tinyxml2compile.vcxproj">
       <Project>{73881f36-48ab-49f0-9f47-e3653915c46c}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\TreeTamer\TreeTamer.vcxproj">
-      <Project>{d8ca6cfd-bb56-451d-9027-e167c8db2f4a}</Project>
+    <ProjectReference Include="..\TreeTamerXml\TreeTamerXml.vcxproj">
+      <Project>{da60d4c2-7c32-480c-9aa8-1b3c64a69ebe}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -7,6 +7,8 @@
 #include "tinyxml2.h"
 #include "tinyxml2Utils.h"
 
+#include "../TreeTamerXml/TreeTamerTinyXml2.h"
+
 TEST(TestCaseName, TestName) {
   EXPECT_EQ(1, 1);
   EXPECT_TRUE(true);
@@ -18,7 +20,7 @@ std::string indent(int level) {
     return s;
 }
 
-TEST(XmlParserWorking, OpenXml) {
+TEST(LibrariesWorking, TinyXml2ParserWorking) {
 	tinyxml2::XMLDocument doc;
 	FILE* fp = fopen("some.xml", "rb");
 	doc.LoadFile(fp);
@@ -34,4 +36,20 @@ TEST(XmlParserWorking, OpenXml) {
 	EXPECT_NE(1, 0);
 	EXPECT_EQ(1, 1);
 	EXPECT_TRUE(true);
+}
+
+TEST(TreeTamerWorking, ParseSimpleXml) {
+	TreeTamerTinyXml2::TreeTamerXmlPath<std::string> path({ "root", "child" });
+	tinyxml2::XMLDocument doc;
+	FILE* fp = fopen("some.xml", "rb");
+	doc.LoadFile(fp);
+	if (doc.ErrorID() != tinyxml2::XML_SUCCESS) {
+		std::cerr << "Error loading XML file: " << doc.ErrorID() << std::endl;
+		return;
+	}
+	auto tree = doc.FirstChildElement();
+	TreeTamerTinyXml2::TreeTamerXmlIterator iterator(tree);
+	TreeTamerTinyXml2::TreeTamerTinyXml tamer{};
+
+
 }
