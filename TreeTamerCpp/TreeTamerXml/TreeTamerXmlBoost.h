@@ -1,7 +1,8 @@
 #pragma once
 #include "../TreeTamer/TreeTamer.h"
+#include "string"
 
-namespace TreeTamerXml
+namespace TreeTamerTinyXml2
 {
 	//template<typename stringType = std::wstring>
 	//class TreeTamerXmlPath
@@ -91,7 +92,7 @@ namespace TreeTamerXml
 	//};
 	//class TreeTamerXml
 	//{
-	//
+
 	//};
 
 	//class TreeTamerXml : public TreeTamer::TreeTamer<std::string, boost::property_tree::ptree, boost::property_tree::ptree::iterator, std::vector<std::string>>//TODO: implement iterator that fits the concept
@@ -101,4 +102,3 @@ namespace TreeTamerXml
 	//	~TreeTamerXml();
 	//};
 }
-
