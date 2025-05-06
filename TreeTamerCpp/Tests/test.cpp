@@ -49,7 +49,7 @@ TEST(TreeTamerWorking, ParseSimpleXml) {
 	}
 	auto tree = doc.FirstChildElement();
 	TreeTamerTinyXml2::TreeTamerXmlIterator iterator(tree);
-	TreeTamerTinyXml2::TreeTamerTinyXml tamer{};
+	TreeTamerTinyXml2::TreeTamerTinyXml2 tamer{};
 
 
 }

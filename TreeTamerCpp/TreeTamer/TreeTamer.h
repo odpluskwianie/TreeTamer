@@ -10,7 +10,7 @@ namespace TreeTamer
 	template<typename PathType>
 	concept TreePath = requires(const PathType& p, const PathType& q)
 	{
-		{ p.operator==(q) } -> std::same_as<bool>;
+		{ p == q } -> std::same_as<bool>;
 		{ p.startsWith(q) } -> std::same_as<bool>;
 		{ p.getLength() } -> std::same_as<size_t>;
 	};
@@ -59,7 +59,7 @@ namespace TreeTamer
 		virtual ~TreeTamer() = default;
 		void init(TreeTamerConfig<PathType, DataType, TreeType>& config)
 		{
-			tree = config.data;
+			tree = config.data; 
 			paths = config.paths;
 			onDataEntryFulfilledCallback = config.onDataEntryFulfilledCallback;
 			iterator = tree.getIterator();
