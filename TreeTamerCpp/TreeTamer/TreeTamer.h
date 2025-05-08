@@ -27,13 +27,8 @@ namespace TreeTamer
 		{ iterator.operator*() } -> std::convertible_to<DataType>;
 	};
 
-	template<typename T, typename DataType>
-	concept ITreeIterable = requires(T tree) {
-		{ tree.getIterator() } -> TreeIterator<DataType>;
-	};
-
-	template <typename DataType, typename PathType, typename TreeType>
-		requires TreePath<PathType> && ITreeIterable<TreeType, DataType>
+	template <typename PathType, typename TreeType, typename DataType>
+		requires TreePath<PathType>
 	class TreeTamerConfig
 	{
 		std::list<PathType> paths;
@@ -45,7 +40,7 @@ namespace TreeTamer
 	};
 
 	template <typename DataType, typename TreeType, typename IteratorType, typename PathType>
-		requires TreeIterator<IteratorType, DataType>&& /*ITreeIterable<TreeType, DataType>&& */TreePath<PathType>
+		requires TreeIterator<IteratorType, DataType>&& TreePath<PathType>
 	class TreeTamer
 	{
 	private:
@@ -57,7 +52,7 @@ namespace TreeTamer
 	public:
 		TreeTamer() = default;
 		virtual ~TreeTamer() = default;
-		void init(TreeTamerConfig<PathType, DataType, TreeType>& config)
+		void init(TreeTamerConfig<PathType, TreeType, DataType>& config)
 		{
 			tree = config.data; 
 			paths = config.paths;
@@ -67,11 +62,6 @@ namespace TreeTamer
 		
 		void processTree(int currentDepth = 0, std::map<PathType, DataType>& outputData = {})
 		{
-			//let's begin from iterate over the tree
-			//outputData[tree.current().getPath()] = *tree;
-
-
-
 			do
 			{
 				if (*tree.getPath().getLength() > 1) // MINUS CURRENT DEPTH

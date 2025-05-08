@@ -42,6 +42,7 @@ namespace TreeTamerTinyXml2
         tinyxml2::XMLElement* parentElement;
         int depth;
     public:
+        TreeTamerXmlIterator() = default;
         TreeTamerXmlIterator(tinyxml2::XMLElement* root)
             : current(root), parentElement(nullptr), depth(0) {}
 
@@ -101,8 +102,7 @@ namespace TreeTamerTinyXml2
         }
     };
 
-    class TreeTamerTinyXml2 : TreeTamer::TreeTamer<std::string, tinyxml2::XMLDocument, TreeTamerXmlIterator, TreeTamerXmlPath<>>
+    class TreeTamerTinyXml2 : TreeTamer::TreeTamer<std::string, tinyxml2::XMLDocument, TreeTamerXmlIterator, TreeTamerXmlPath<std::string>>
     {
-
     };
 }
